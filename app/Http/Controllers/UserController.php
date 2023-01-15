@@ -62,32 +62,6 @@ class UserController extends Controller
         return $response;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        $response = ['error' => ''];
-
-        $validator = Validator::make($request->all(), [
-            'id' => 'required'
-        ]);
-
-        if (empty($validator->fails())) {
-            $user = User::find($request->id);
-            if ($user) {
-                $response['user'] = $user;
-            } else {
-                $response['error'] = 'User not found';
-            }
-        } else {
-            $response['error'] = $validator->errors()->first();
-        }
-        return $response;
-    }
 
     /**
      * Show the form for editing the specified resource.

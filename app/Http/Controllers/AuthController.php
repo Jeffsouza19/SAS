@@ -46,7 +46,7 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $response = ['error' => ''];
 

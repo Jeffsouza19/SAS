@@ -34,7 +34,7 @@ Route::any('/unauthenticated', function () {
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login')->name('auth.login');
-    Route::post('/register', 'create')->name('auth.create');
+    Route::post('/register', 'store')->name('auth.store');
     Route::post('/logout', 'logout')->name('auth.logout');
 });
 
@@ -48,7 +48,6 @@ Route::controller(BookController::class)->prefix('book')->group(function () {
 
 Route::middleware('auth:sanctum')->controller(UserController::class)->prefix('user')->group(function () {
     Route::get('/', 'index')->name('user.index');
-    Route::get('/show', 'show')->name('user.show');
     Route::get('/edit', 'edit')->name('user.edit');
     Route::post('/store', 'store')->name('user.store');
     Route::put('/update', 'update')->name('user.update');

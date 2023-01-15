@@ -1,66 +1,384 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hello! Wellcome
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## This is a test carried out for a job vacancy at Search and Stay
 
-## About Laravel
+<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### ***Note***
+    It is an API built in Laravel for registering books with authentication using Sanctum.
+    All routes bring the 'error' position, filled in case of any error, or empty
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## **Requirements to start the application**
 
-## Learning Laravel
+    This project uses laravel 9, with PHP8.0.2.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    Use the following commands in the terminal, already in the project folder
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    composer install
+    php artisan migration
 
-## Laravel Sponsors
+    php artisan serve --host=0.0.0.0
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    note:
+    This project has seeders to populate the database, to use run the command:
+    php artisan db:seed
 
-### Premium Partners
+    With that the application will be running on localHost
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    example of a request after starting the application:
+    localhost:8000/api/login
 
-## Contributing
+<br>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#
+### ***Rotas***
 
-## Code of Conduct
+*To access the routes use yourdomain.com/api/~*
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<br>
 
-## Security Vulnerabilities
+### AuthController routes
+- No prefix needed
+# 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-  **/unauthenticated**
 
-## License
+        ANY type route, for users who have not yet logged in.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        Any route that is accessed without being authenticated will redirect to this route
+
+-   **/login**
+
+        POST type route, receives 2 parameters to perform the login and receive the authentication token
+
+        -Parameters:
+            Email      -> required, 
+            Password   -> required
+
+        -Return:
+            Token, User data
+
+-   **/register**
+
+        POST type route, receives 4 parameters to register, login and receive the authentication token.
+
+        -Parameters:
+            Name                -> required, 
+            Email               -> required, 
+            Password            -> required, 
+            Confirm Password    -> required
+
+        -Return:
+            Token, User data
+
+-   **/logout**
+
+        GET type route, it is necessary to be logged in, it does not receive any parameters
+
+        -Return:
+            Logout successfully
+
+<br>
+
+### BookController routes
+- all routes need to be logged in
+#
+
+-   **/book**
+
+        GET type route, it does not receive any parameters
+
+        -Return:
+            All registered books
+
+-   **/book/store**
+
+        POST type route, receive 3 parameters to register a book
+
+        -Parameters:
+            Name    -> required,
+            ISBN    -> integer,
+            Value   -> decimal(min:1, max:9)
+
+        -Return:
+            Registered book data
+
+-   **/book/edit**
+
+        POST type route, receive 1 parameter to edit a book
+
+        -Parameter:
+            Id  -> required
+
+        -Return:
+            Specific book data
+
+-   **/book/update**
+
+        PUT type route, receive 4 parameters to update a book
+
+        -Parameters:
+            Id      -> required,
+            Name    -> required,
+            ISBN    -> integer,
+            Value   -> decimal(min:1, max:9)
+
+        -Return:
+            Updated book data
+
+-   **/book/delete**
+
+        DELETE type route, receive 1 parameter to delete a book
+
+        -Parameter:
+            Id      -> required
+        
+        -Return:
+            Delete successfully
+
+
+<br>
+
+### UserController routes
+- all routes need to be logged in
+#
+    
+-   **/user**
+
+        GET type route, it does not receive any parameters
+
+        -Return
+            All users data
+
+-   **/user/edit**
+
+        GET type route, receive 1 parameter to show a user
+
+        -Parameter:
+            id      -> required
+
+        -Return:
+            Specific user data
+
+-   **/user/update**
+
+        PUT type route, receive 6 parameters to update a user
+
+        -Parameters:
+            id          -> required
+            name        -> required
+            email       -> optional
+            password    -> optional
+                if you want change password you'll need 2 more parameters
+                old_password        -> current password
+                confirm_passoword   -> same as the password field 
+        ** Only the user can change his password and email
+
+        -Return:
+            Updated specific user
+
+-   **/user/delete**
+
+        DELETE type route, receive 1 parameter to delete a user
+
+        -Parameters:
+            id      -> required
+        
+
+
+<br>
+<br>
+<br>
+<br>
+
+# **Portuguese (pt-BR)**
+
+# Olá!  Seja Bem vindo
+
+## Este é um teste realizado para uma vaga de emprego na Busca e Fica
+
+<br>
+
+### ***Observação***
+     É uma API construída em Laravel para registro de livros com autenticação usando Sanctum.
+     Todas as rotas trazem a posição 'error', preenchida em caso de algum erro, ou vazia
+
+
+## **Requisitos para iniciar o aplicativo**
+
+     Este projeto usa laravel 9, com PHP8.0.2.
+
+
+     Use os seguintes comandos no terminal, já na pasta do projeto
+
+     composer install
+     php artisan migration
+
+     php artisan serve --host=0.0.0.0
+
+     Nota:
+     Este projeto possui seeders para preencher o banco de dados, para usar execute o comando:
+     php artisan db:seed
+
+     Com isso a aplicação estará rodando no localHost
+
+     exemplo de requisição após iniciar a aplicação:
+     localhost:8000/api/login
+
+<br>
+
+#
+### ***Rotas***
+
+*Para acessar as rotas use seudominio.com/api/~*
+
+<br>
+
+### Rotas AuthController
+- Nenhum prefixo necessário
+#
+
+- **/unauthenticated**
+
+         Rota do tipo ANY, para usuários que ainda não efetuaram login.
+
+         Qualquer rota que for acessada sem estar autenticada irá redirecionar para esta rota
+
+-   **/login**
+
+         Rota tipo POST, recebe 2 parâmetros para realizar o login e receber o token de autenticação
+
+         -Parâmetros:
+             Email      -> obrigatório,
+             Senha      -> obrigatório
+
+         -Retornar:
+             Token, dados do usuário
+
+-   **/register**
+
+         Rota tipo POST, recebe 4 parâmetros para cadastrar, fazer login e receber o token de autenticação.
+
+         -Parâmetros:
+             Nome               -> obrigatório,
+             Email              -> obrigatório,
+             Password           -> obrigatório,
+             confirm password   -> obrigatório
+
+         -Retornar:
+             Token, dados do usuário
+
+-   **/logout**
+
+         Rota tipo GET, é necessário estar logado, não recebe nenhum parâmetro
+
+         -Retornar:
+             Sair com sucesso
+
+<br>
+
+### Rotas do BookController
+- todas as rotas precisam estar logadas
+#
+
+-   **/book**
+
+         Rota do tipo GET, não recebe nenhum parâmetro
+
+         -Retornar:
+             Todos os livros registrados
+
+- **/book/store**
+
+         Rota tipo POST, recebe 3 parâmetros para registrar um livro
+
+         -Parâmetros:
+             Nome       -> obrigatório,
+             ISBN       -> inteiro,
+             Valor      -> decimal(min:1, max:9)
+
+         -Retornar:
+             Dados do livro registrado
+
+- **/book/edit**
+
+         Rota tipo POST, recebe 1 parâmetro para editar um livro
+
+         -Parâmetro:
+             Id         -> obrigatório
+
+         -Retornar:
+             Dados específicos do livro
+
+- **/book/update**
+
+         Rota do tipo PUT, receba 4 parâmetros para atualizar um livro
+
+         -Parâmetros:
+             Id         -> obrigatório,
+             Nome       -> obrigatório,
+             ISBN       -> inteiro,
+             Valor      -> decimal(min:1, max:9)
+
+         -Retornar:
+             Dados do livro atualizados
+
+- **/book/delete**
+
+         Rota do tipo DELETE, receba 1 parâmetro para deletar um livro
+
+         -Parâmetro:
+             Id     -> obrigatório
+        
+         -Retornar:
+             Excluir com sucesso
+
+
+<br>
+
+### Rotas do UserController
+- todas as rotas precisam estar logadas
+#
+    
+-   **/user**
+
+         Rota do tipo GET, não recebe nenhum parâmetro
+
+         -Retornar
+             Todos os dados dos usuários
+
+- **/user/edit**
+
+         Rota do tipo GET, recebe 1 parâmetro para mostrar a um usuário
+
+         -Parâmetro:
+             id     -> obrigatório
+
+         -Retornar:
+             Dados específicos do usuário
+
+- **/user/update**
+
+         Rota do tipo PUT, recebe 6 parâmetros para atualizar um usuário
+
+         -Parâmetros:
+             id         -> obrigatório
+             name       -> obrigatório
+             email      -> opcional
+             password   -> opcional
+                 se você quiser alterar a senha, precisará de mais 2 parâmetros
+                 old_password       -> senha atual
+                 confirm_passoword  -> igual ao campo de senha
+         ** Apenas o usuário pode alterar sua senha e e-mail
+
+         -Retornar:
+             Usuário específico atualizado
+
+- **/user/delete**
+
+         Tipo de rota DELETE, receba 1 parâmetro para deletar um usuário
+
+         -Parâmetros:
+             id -> obrigatório
