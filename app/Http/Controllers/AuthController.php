@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'password' => 'required|unique:users,email'
+            'password' => 'required'
         ]);
 
         if (empty($validator->fails())) {
@@ -37,7 +37,7 @@ class AuthController extends Controller
                 $response['token'] = $token->plainTextToken;
                 $response['user'] = $request->user();
             } else {
-                $response['error'] = 'Usuario e/ou senha estão incorretos';
+                $response['error'] = 'User and/or password are incorrect';
                 return $response;
             }
         } else {
@@ -52,7 +52,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
@@ -74,7 +74,7 @@ class AuthController extends Controller
                 $response['token'] = $token->plainTextToken;
                 $response['user'] = $request->user();
             } else {
-                $response['error'] = 'Usuario e/ou senha estão incorretos';
+                $response['error'] = 'An error has occurred';
             }
         } else {
             $response['error'] = $validator->errors()->first();
@@ -84,14 +84,14 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function getAllUsers()
-    {
-    }
-
     public function logout(Request $request)
     {
+        $response = ['error' => ''];
+
         $request->user()->tokens()->delete();
 
-        return ['error' => ''];
+        $response['success'] = 'logged out';
+
+        return $response;
     }
 }
