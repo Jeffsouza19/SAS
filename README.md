@@ -197,7 +197,7 @@
 
 # Olá!  Seja Bem vindo
 
-## Este é um teste realizado para uma vaga de emprego na Busca e Fica
+## Este é um teste realizado para uma vaga de emprego na Search and Stay
 
 <br>
 
